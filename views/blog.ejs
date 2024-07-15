@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <link rel="stylesheet" href="./index.css" />
+    <title>Blog</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container-fluid mt-3 mb-4">
+      <div class="card">
+        <img
+          src="<%= blogItem.coverImgurl %>"
+          class="card-img-top"
+          alt="Blog Post Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><%= blogItem.title %></h5>
+          <p class="card-text"><%= blogItem.body %></p>
+          <p class="card-text">
+            <small class="text-muted"
+              >Uploaded by <i><b><%= blogItem?.createdBy?.name %></b></i></small
+            >
+            <br />
+            <small class="text-muted"
+              >Last Updated at <i><%= blogItem?.updatedAt %></i></small
+            >
+          </p>
+        </div>
+      </div>
+      <div class="border mt-4 p-3 rounded">
+        <h5 class="title">Add Comment</h5>
+        <form
+          action="/blog/comment/<%= blogItem._id %>"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+        >
+          <div class="mb-3">
+            <textarea
+              type="password"
+              class="form-control"
+              name="content"
+              id="exampleInputPassword1"
+              rows="2"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">comment</button>
+        </form>
+      </div>
+      <div class="border mt-4 p-3 rounded">
+        <h5 class="title">Comments (<%= comments.length %>)</h5>
+        <% comments.forEach(element => { %>
+        <div class="border border-primary-subtle rounded p-2 pb-0 mb-2">
+          <h6 class="title">comment by <%= element.createdBy?.name %></h6>
+          <p class="text"><%= element.content %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <%- include('./partials/footer') %>
+  </body>
+  <%- include('./partials/scripts') %>
+</html>

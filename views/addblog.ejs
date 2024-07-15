@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <link rel="stylesheet" href="index.css" />
+    <title>Add Blog</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container-fluid">
+      <form
+        class="row g-3 m-2 mt-3 bg-dark text-light p-4 b-5 rounded"
+        action="/blog/addblog"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Title*</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            placeholder="Enter the title of blog"
+            name="title"
+          />
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">body*</label>
+          <textarea
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            placeholder="Enter the body of the blog here...."
+            rows="5"
+            name="body"
+          ></textarea>
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">CoverImage*</label>
+          <input
+            type="file"
+            class="form-control"
+            id="inputAddress"
+            placeholder="url of Cover Image"
+            name="coverImgurl"
+          />
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+    <%- include('./partials/footer') %>
+  </body>
+  <%- include('./partials/scripts') %>
+</html>

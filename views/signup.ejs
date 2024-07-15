@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body style="background: darkgrey">
+    <br />
+    <div
+      class="container bg-light text-dark border p-4 rounded mt-5 box-shadow"
+    >
+      <form action="/user/signup" method="post">
+        <h3 class="text-center m-2">Sign UP</h3>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Name</label>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            id="exampleInputPassword1"
+            required
+          />
+        </div>
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="exampleCheck1"
+            onchange="show()"
+          />
+          <label class="form-check-label" for="exampleCheck1"
+            >Show Password</label
+          >
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">SignUp</button>
+      </form>
+    </div>
+  </body>
+  <%- include('./partials/scripts') %>
+  <script>
+    let check = document.getElementsByClassName("form-check-input")[0];
+    function show() {
+      let ele = document.getElementsByName("password")[0];
+      if (ele.type == "password") {
+        ele.type = "text";
+      } else {
+        ele.type = "password";
+      }
+    }
+  </script>
+</html>

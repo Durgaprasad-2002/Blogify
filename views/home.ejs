@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <link rel="stylesheet" href="index.css" />
+    <title>Home</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+      .container {
+        margin-top: 50px;
+      }
+      h1,
+      h2 {
+        color: #007bff;
+        text-align: center;
+        text-decoration: underline 2px black;
+        text-underline-offset: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container-fluid">
+      <br />
+      <h1>All Blogs</h1>
+      <br />
+      <% blogs.forEach(element => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <img
+            src="<%= element.coverImgurl %>"
+            class="card-img-top"
+            alt="blogImage"
+            style="margin-bottom: 15px; max-height: 150px; object-fit: cover"
+          />
+          <br />
+
+          <h5 class="card-title"><%= element.title %></h5>
+          <a href="/blog/<%= element._id %>">
+            <button class="btn btn-primary">Read more</button>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <%- include('./partials/footer') %>
+  </body>
+  <%- include('./partials/scripts') %>
+</html>
