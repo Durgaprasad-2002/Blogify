@@ -1,32 +1,77 @@
-<footer class="footer bg-dark text-light pt-4">
+<footer class="footer bg-dark text-light pt-5">
   <div class="container">
     <div class="row footer-content">
-      <div class="col-md-4">
-        <h5>Quick Links</h5>
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase">Quick Links</h5>
         <ul class="list-unstyled">
-          <li><a href="/">Home</a></li>
-          <li><a href="/addblog">Add Blog</a></li>
+          <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+          <li>
+            <a href="/addblog" class="text-light text-decoration-none"
+              >Add Blog</a
+            >
+          </li>
         </ul>
       </div>
-      <div class="col-md-4">
-        <h5>Contact Information</h5>
-        <p class="text">123 Main Street, City, Country</p>
-        <p class="text">Email: info@example.com</p>
-        <p class="text">Phone: +123456789</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Subscribe to Our Newsletter</h5>
+
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase">Subscribe</h5>
         <form>
-          <div class="mb-3">
+          <div class="input-group mb-3">
             <input
               type="email"
               class="form-control"
               placeholder="Enter your email"
+              aria-label="Subscriber's email"
+              aria-describedby="button-subscribe"
             />
+            <button class="btn btn-primary" type="button" id="button-subscribe">
+              Subscribe
+            </button>
           </div>
-          <button type="submit" class="btn btn-primary">Subscribe</button>
         </form>
       </div>
     </div>
+    <hr />
+    <div class="text-center mt-3">
+      <small>&copy; 2024 Your Blog Site. All Rights Reserved.</small>
+    </div>
   </div>
 </footer>
+
+<style>
+  .footer {
+    background: linear-gradient(135deg, #1f1f1f, #343a40);
+    color: #f8f9fa;
+    padding: 0px 0px 10px 0px;
+  }
+  .footer h5 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #f8f9fa;
+  }
+  .footer ul {
+    padding: 0;
+    list-style: none;
+  }
+  .footer ul li a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer ul li a:hover {
+    color: #007bff;
+  }
+  .footer p {
+    margin: 0;
+  }
+  .footer .input-group {
+    max-width: 300px;
+  }
+  .footer .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+  .footer .btn-primary:hover {
+    background-color: #0056b3;
+  }
+</style>

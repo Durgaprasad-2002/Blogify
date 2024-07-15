@@ -3,7 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const { connect } = require("mongoose");
 const path = require("path");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const Mongourl = process.env.MONGO_URL;
 const userRouter = require("./routes/user");
 const blogRouter = require("./routes/blog");
@@ -35,7 +35,7 @@ app.get("/", CheckAuthentication, async (req, res) => {
   });
 });
 
-app.get("/addblog", CheckAuthentication, (req, res) => {
+app.get("/addblog", CheckAuthentication, async (req, res) => {
   res.render("addblog", {
     user: req.userData,
   });

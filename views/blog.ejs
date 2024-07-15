@@ -4,6 +4,36 @@
     <%- include('./partials/head') %>
     <link rel="stylesheet" href="./index.css" />
     <title>Blog</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .card-title,
+      .title {
+        color: #007bff;
+      }
+      .card-text {
+        margin-bottom: 10px;
+      }
+      .card img {
+        max-height: 400px;
+        object-fit: cover;
+      }
+      .border {
+        background-color: #fff;
+        border-color: #dee2e6 !important;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
     <%- include('./partials/nav') %>
@@ -18,13 +48,13 @@
           <h5 class="card-title"><%= blogItem.title %></h5>
           <p class="card-text"><%= blogItem.body %></p>
           <p class="card-text">
-            <small class="text-muted"
-              >Uploaded by <i><b><%= blogItem?.createdBy?.name %></b></i></small
-            >
+            <small class="text-muted">
+              Uploaded by <i><b><%= blogItem?.createdBy?.name %></b></i>
+            </small>
             <br />
-            <small class="text-muted"
-              >Last Updated at <i><%= blogItem?.updatedAt %></i></small
-            >
+            <small class="text-muted">
+              Last Updated at <i><%= blogItem?.updatedAt %></i>
+            </small>
           </p>
         </div>
       </div>
@@ -37,27 +67,27 @@
         >
           <div class="mb-3">
             <textarea
-              type="password"
               class="form-control"
               name="content"
-              id="exampleInputPassword1"
+              id="commentContent"
               rows="2"
+              placeholder="Enter your comment here..."
+              required
             ></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">comment</button>
+          <button type="submit" class="btn btn-primary">Comment</button>
         </form>
       </div>
       <div class="border mt-4 p-3 rounded">
         <h5 class="title">Comments (<%= comments.length %>)</h5>
-        <% comments.forEach(element => { %>
-        <div class="border border-primary-subtle rounded p-2 pb-0 mb-2">
-          <h6 class="title">comment by <%= element.createdBy?.name %></h6>
-          <p class="text"><%= element.content %></p>
+        <% comments.forEach(comment => { %>
+        <div class="border border-primary-subtle rounded p-2 mb-2">
+          <h6 class="title">Comment by <%= comment.createdBy?.name %></h6>
+          <p class="text"><%= comment.content %></p>
         </div>
         <% }) %>
       </div>
     </div>
-    <%- include('./partials/footer') %>
+    <%- include('./partials/footer') %> <%- include('./partials/scripts') %>
   </body>
-  <%- include('./partials/scripts') %>
 </html>

@@ -3,80 +3,96 @@ const blog = require("../models/blog");
 const comment = require("../models/comments");
 const multer = require("multer");
 const path = require("path");
+const { body, validationResult } = require("express-validator");
 
+// Setup Multer for file uploads
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(`./public/uploads`));
+  destination: (req, file, cb) => {
+    cb(null, path.resolve("./public/uploads"));
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      `${file.fieldname}-${uniqueSuffix}.${file.mimetype.split("/")[1]}`
-    );
+    const fileExtension = file.mimetype.split("/")[1];
+    cb(null, `${file.fieldname}-${uniqueSuffix}.${fileExtension}`);
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 const router = Router();
 
-//posting comments
+// Add comment to a blog post
 router.post("/comment/:id", async (req, res) => {
-  let blogId = req.params.id;
-  await comment.create({
-    content: req?.body.content,
-    createdBy: req?.userData?._id,
-    blogId: blogId,
-  });
+  const blogId = req.params.id;
+  const { content } = req.body;
+  const userId = req.userData?._id;
 
-  return res.redirect(`/blog/${blogId}`);
-});
+  if (!content || !userId) {
+    return res.status(400).redirect(`/blog/${blogId}`);
+  }
 
-//retriveing blog by Id
-router.get("/:blogId", async (req, res) => {
   try {
-    let blogId = req.params.blogId;
-    console.log("obj id: " + blogId);
-    const blogItem = await blog.findById(blogId).populate("createdBy");
-    const Comment = await comment
-      .find({ blogId: blogId })
-      .populate("createdBy");
-
-    return res.render("blog", {
-      blogItem: blogItem,
-      user: req.userData,
-      comments: Comment,
+    await comment.create({
+      content,
+      createdBy: userId,
+      blogId,
     });
+    res.redirect(`/blog/${blogId}`);
   } catch (error) {
-    console.log("Error in blog retrive :", error);
-    return res.redirect("/");
+    console.error("Error posting comment:", error);
+    res.redirect(`/blog/${blogId}`);
   }
 });
 
-//posting blog
-router.post("/addblog", upload.single("coverImgurl"), async (req, res) => {
+// Retrieve blog post by ID
+router.get("/:blogId", async (req, res) => {
+  const blogId = req.params.blogId;
+
   try {
-    let coverImgurl = `/uploads/${req?.file?.filename}`;
-    const { title, body } = req.body;
-    const result = await blog.create({
+    const blogItem = await blog.findById(blogId).populate("createdBy");
+    if (!blogItem) {
+      return res.status(404).redirect("/");
+    }
+    const comments = await comment.find({ blogId }).populate("createdBy");
+
+    res.render("blog", {
+      blogItem,
+      user: req.userData,
+      comments,
+    });
+  } catch (error) {
+    console.error("Error retrieving blog:", error);
+    res.redirect("/");
+  }
+});
+
+// Add a new blog post
+router.post("/addblog", upload.single("coverImgurl"), async (req, res) => {
+  const { title, body } = req.body;
+  const coverImgurl = req.file ? `/uploads/${req.file.filename}` : "";
+
+  if (!title || !body) {
+    return res.status(400).redirect("/addblog");
+  }
+
+  try {
+    await blog.create({
       title,
       body,
       coverImgurl,
-      createdBy: req?.userData._id || "",
+      createdBy: req.userData._id || "",
     });
-    console.log(result);
     res.redirect("/");
   } catch (error) {
-    res.redirect("/addblog", {
-      error: "failed to upload",
-    });
+    console.error("Error posting blog:", error);
+    res.status(500).redirect("/addblog");
   }
 });
 
-//retriving image
+// Serve uploaded images
 router.get("/uploads/:name", (req, res) => {
-  res.sendFile(path.resolve(`./public/uploads/${req.params.name}`));
+  const fileName = path.basename(req.params.name); // Sanitize filename
+  res.sendFile(path.resolve(`./public/uploads/${fileName}`));
 });
 
 module.exports = router;

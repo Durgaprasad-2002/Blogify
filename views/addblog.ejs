@@ -4,54 +4,88 @@
     <%- include('./partials/head') %>
     <link rel="stylesheet" href="index.css" />
     <title>Add Blog</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+      .container-fluid {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      form {
+        background-color: #343a40;
+        color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+      }
+      .form-label {
+        font-weight: bold;
+      }
+      .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+      button[type="submit"] {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+      }
+      button[type="submit"]:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
     <%- include('./partials/nav') %>
     <div class="container-fluid">
       <form
-        class="row g-3 m-2 mt-3 bg-dark text-light p-4 b-5 rounded"
+        class="row g-3 m-2 mt-3"
         action="/blog/addblog"
         method="post"
         enctype="multipart/form-data"
       >
         <div class="col-12">
-          <label for="inputAddress" class="form-label">Title*</label>
+          <label for="title" class="form-label">Title*</label>
           <input
             type="text"
             class="form-control"
-            id="inputAddress"
-            placeholder="Enter the title of blog"
+            id="title"
+            placeholder="Enter the title of the blog"
             name="title"
+            required
           />
         </div>
         <div class="col-12">
-          <label for="inputAddress" class="form-label">body*</label>
+          <label for="body" class="form-label">Body*</label>
           <textarea
-            type="text"
             class="form-control"
-            id="inputAddress"
-            placeholder="Enter the body of the blog here...."
+            id="body"
+            placeholder="Enter the body of the blog here..."
             rows="5"
             name="body"
+            required
           ></textarea>
         </div>
         <div class="col-12">
-          <label for="inputAddress" class="form-label">CoverImage*</label>
+          <label for="coverImgurl" class="form-label">Cover Image*</label>
           <input
             type="file"
             class="form-control"
-            id="inputAddress"
-            placeholder="url of Cover Image"
+            id="coverImgurl"
             name="coverImgurl"
+            required
           />
         </div>
-
-        <div class="col-12">
+        <div class="col-12 text-center">
           <button type="submit" class="btn btn-primary">Upload</button>
         </div>
       </form>
     </div>
-    <%- include('./partials/footer') %>
+    <%- include('./partials/footer') %> <%- include('./partials/scripts') %>
   </body>
-  <%- include('./partials/scripts') %>
 </html>

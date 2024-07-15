@@ -5,42 +5,46 @@
     <title>Sign In</title>
     <link rel="stylesheet" href="index.css" />
   </head>
-  <body style="background: darkgrey">
-    <br />
-    <div
-      class="container bg-light text-dark border p-4 rounded mt-5 box-shadow"
-    >
+  <body
+    style="
+      background: darkgrey;
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+      align-items: center;
+      height: 100vh;
+    "
+  >
+    <div class="container bg-light text-dark border p-4 rounded box-shadow">
       <form action="/user/signin" method="post">
-        <h3 class="text-center m-2">Sign IN</h3>
-        <div class="mb-3">
-          <% if (locals?.error) { %> <% if (locals?.error?.userExisted==false) {
-          %>
-          <div class="alert alert-danger" role="alert">User not Found</div>
-          <% } %> <% if (locals?.error?.passwordMatched==false) { %>
-          <div class="alert alert-danger" role="alert">password wrong</div>
-          <% } %> <% } %>
-        </div>
+        <h3 class="text-center m-2">Sign In</h3>
+
+        <% if (locals?.error) { %> <% if (locals?.error?.userExisted === false)
+        { %>
+        <div class="alert alert-danger" role="alert">User not Found</div>
+        <% } %> <% if (locals?.error?.passwordMatched === false) { %>
+        <div class="alert alert-danger" role="alert">Incorrect password</div>
+        <% } %> <% } %>
 
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"
-            >Email address</label
-          >
+          <label for="email" class="form-label">Email address</label>
           <input
             type="email"
             name="email"
             class="form-control"
-            id="exampleInputEmail1"
+            id="email"
             aria-describedby="emailHelp"
             required
           />
         </div>
+
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <label for="password" class="form-label">Password</label>
           <input
             type="password"
             name="password"
             class="form-control"
-            id="exampleInputPassword1"
+            id="password"
             required
           />
         </div>
@@ -49,35 +53,34 @@
           <input
             type="checkbox"
             class="form-check-input"
-            id="exampleCheck1"
-            onchange="show()"
+            id="showPassword"
+            onchange="togglePasswordVisibility()"
           />
-          <label class="form-check-label" for="exampleCheck1"
+          <label class="form-check-label" for="showPassword"
             >Show Password</label
           >
         </div>
-        <br />
-        <button type="submit" class="btn btn-primary">SignIn</button>
-        <br />
+
+        <button type="submit" class="btn btn-primary">Sign In</button>
 
         <hr />
 
-        <div style="display: flex; flex-direction: column; align-items: center">
-          <p>Don't have account? <a href="/user/signup">sign up</a></p>
+        <div class="text-center">
+          <p>Don't have an account? <a href="/user/signup">Sign up</a></p>
         </div>
       </form>
     </div>
-  </body>
-  <%- include('./partials/scripts') %>
-  <script>
-    let check = document.getElementsByClassName("form-check-input")[0];
-    function show() {
-      let ele = document.getElementsByName("password")[0];
-      if (ele.type == "password") {
-        ele.type = "text";
-      } else {
-        ele.type = "password";
+
+    <%- include('./partials/scripts') %>
+    <script>
+      function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
       }
-    }
-  </script>
+    </script>
+  </body>
 </html>

@@ -4,15 +4,15 @@ const { generateToken } = require("../Authentication/index");
 
 const router = Router();
 
-router.get("/signin", (req, res) => {
+router.get("/signin", async (req, res) => {
   res.render("signin");
 });
 
-router.get("/signup", (req, res) => {
+router.get("/signup", async (req, res) => {
   res.render("signup");
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", async (req, res) => {
   res.clearCookie("token");
   res.render("signin");
 });
